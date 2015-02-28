@@ -22,7 +22,8 @@ typedef NS_ENUM(NSUInteger, SVProgressHUDMaskType) {
     SVProgressHUDMaskTypeNone = 1,  // allow user interactions while HUD is displayed
     SVProgressHUDMaskTypeClear,     // don't allow user interactions
     SVProgressHUDMaskTypeBlack,     // don't allow user interactions and dim the UI in the back of the HUD
-    SVProgressHUDMaskTypeGradient   // don't allow user interactions and dim the UI with a a-la-alert-view background gradient
+    SVProgressHUDMaskTypeGradient,  // don't allow user interactions and dim the UI with a a-la-alert-view background gradient
+    SVProgressHUDMaskTypeCustomView     // don't allow user interactions and show custom view
 };
 
 @interface SVProgressHUD : UIView
@@ -38,6 +39,7 @@ typedef NS_ENUM(NSUInteger, SVProgressHUDMaskType) {
 + (void)setErrorImage:(UIImage*)image;                      // default is the bundled error image provided by Freepik
 + (void)setDefaultMaskType:(SVProgressHUDMaskType)maskType; // default is SVProgressHUDMaskTypeNone
 + (void)setViewForExtension:(UIView*)view;                  // default is nil, only used if #define SV_APP_EXTENSIONS is set
++ (void)setCustomViewMask:(UIView *)view;
 
 #pragma mark - Show Methods
 

@@ -32,6 +32,7 @@ static UIImage *SVProgressHUDSuccessImage;
 static UIImage *SVProgressHUDErrorImage;
 static SVProgressHUDMaskType SVProgressHUDDefaultMaskType;
 static UIView *SVProgressHUDExtensionView;
+static UIView *SVProgressHUDCustomViewMask;
 
 static const CGFloat SVProgressHUDRingRadius = 18;
 static const CGFloat SVProgressHUDRingNoTextRadius = 24;
@@ -130,9 +131,11 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
     SVProgressHUDDefaultMaskType = maskType;
 }
 
-+ (void)setViewForExtension:(UIView *)view{
++ (void)setCustomViewMask:(UIView *)view {
     [self sharedView];
-    SVProgressHUDExtensionView = view;
+    [SVProgressHUDCustomViewMask removeFromSuperview];
+    SVProgressHUDCustomViewMask = view;
+    
 }
 
 
@@ -650,6 +653,14 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
     [self.overlayView setHidden:NO];
     self.overlayView.backgroundColor = [UIColor clearColor];
     [self positionHUD:nil];
+    
+    if (self.maskType == SVProgressHUDMaskTypeCustomView && SVProgressHUDCustomViewMask && [SVProgressHUDCustomViewMask isKindOfClass:[UIView class]]) {
+        [self.overlayView setAutoresizesSubviews:YES];
+        if (!SVProgressHUDCustomViewMask.superview) {
+            [self.overlayView addSubview:SVProgressHUDCustomViewMask];
+        }
+        [self.hudView setHidden:YES];
+    }
     
     if(self.alpha != 1 || self.hudView.alpha != 1) {
         NSDictionary *userInfo = [self notificationUserInfo];
