@@ -32,7 +32,7 @@ static UIImage *SVProgressHUDSuccessImage;
 static UIImage *SVProgressHUDErrorImage;
 static SVProgressHUDMaskType SVProgressHUDDefaultMaskType;
 static UIView *SVProgressHUDExtensionView;
-static UIView *SVProgressHUDCustomViewMask;
+static UIView<SVProgressHUDCustomViewInterface> *SVProgressHUDCustomViewMask;
 
 static const CGFloat SVProgressHUDRingRadius = 18;
 static const CGFloat SVProgressHUDRingNoTextRadius = 24;
@@ -658,6 +658,9 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
         [self.overlayView setAutoresizesSubviews:YES];
         if (!SVProgressHUDCustomViewMask.superview) {
             [self.overlayView addSubview:SVProgressHUDCustomViewMask];
+        }
+        if ([SVProgressHUDCustomViewMask respondsToSelector:@selector(setStatus:)]) {
+            [SVProgressHUDCustomViewMask setStatus:string];
         }
         [self.hudView setHidden:YES];
     }

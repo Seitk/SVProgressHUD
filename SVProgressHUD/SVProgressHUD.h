@@ -26,6 +26,11 @@ typedef NS_ENUM(NSUInteger, SVProgressHUDMaskType) {
     SVProgressHUDMaskTypeCustomView     // don't allow user interactions and show custom view
 };
 
+@protocol SVProgressHUDCustomViewInterface <NSObject>
+@optional
+- (void)setStatus:(NSString *)status;
+@end
+
 @interface SVProgressHUD : UIView
 
 #pragma mark - Customization
@@ -39,7 +44,7 @@ typedef NS_ENUM(NSUInteger, SVProgressHUDMaskType) {
 + (void)setErrorImage:(UIImage*)image;                      // default is the bundled error image provided by Freepik
 + (void)setDefaultMaskType:(SVProgressHUDMaskType)maskType; // default is SVProgressHUDMaskTypeNone
 + (void)setViewForExtension:(UIView*)view;                  // default is nil, only used if #define SV_APP_EXTENSIONS is set
-+ (void)setCustomViewMask:(UIView *)view;
++ (void)setCustomViewMask:(UIView<SVProgressHUDCustomViewInterface> *)view;
 
 #pragma mark - Show Methods
 
