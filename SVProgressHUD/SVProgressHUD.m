@@ -131,7 +131,7 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
     SVProgressHUDDefaultMaskType = maskType;
 }
 
-+ (void)setCustomViewMask:(UIView *)view {
++ (void)setCustomViewMask:(UIView<SVProgressHUDCustomViewInterface> *)view {
     [self sharedView];
     [SVProgressHUDCustomViewMask removeFromSuperview];
     SVProgressHUDCustomViewMask = view;
@@ -655,12 +655,12 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
     [self positionHUD:nil];
     
     if (self.maskType == SVProgressHUDMaskTypeCustomView && SVProgressHUDCustomViewMask && [SVProgressHUDCustomViewMask isKindOfClass:[UIView class]]) {
-        [self.overlayView setAutoresizesSubviews:YES];
-        if (!SVProgressHUDCustomViewMask.superview) {
-            [self.overlayView addSubview:SVProgressHUDCustomViewMask];
-        }
+
         if ([SVProgressHUDCustomViewMask respondsToSelector:@selector(setStatus:)]) {
             [SVProgressHUDCustomViewMask setStatus:string];
+        }
+        if (!SVProgressHUDCustomViewMask.superview) {
+            [self.overlayView addSubview:SVProgressHUDCustomViewMask];
         }
         [self.hudView setHidden:YES];
     }
